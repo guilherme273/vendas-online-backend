@@ -1,33 +1,25 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { StateEntity } from '../../state/entities/state.entity';
 
-@Entity({ name: 'user' })
-export class UserEntity {
+@Entity({ name: 'city' })
+export class CityEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'name', nullable: false })
+  @Column({ name: 'name', type: 'varchar', length: 255, nullable: false })
   name: string;
 
-  @Column({ name: 'email', nullable: false })
-  email: string;
-
-  @Column({ name: 'password', nullable: false })
-  password: string;
-
-  @Column({ name: 'cpf', nullable: false })
-  cpf: string;
-
-  @Column({ name: 'phone' })
-  phone: string;
-
-  @Column({ name: 'tipo', type: 'int', nullable: false, default: 0 })
-  tipo: number;
+  @ManyToOne(() => StateEntity)
+  @JoinColumn({ name: 'state_id' })
+  state: StateEntity;
 
   @CreateDateColumn({
     name: 'created_at',
